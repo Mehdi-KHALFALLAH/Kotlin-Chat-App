@@ -16,6 +16,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
         />
+
     <EditText
         android:id="@+id/edt_name"
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_background"
         android:hint="Name"
-        android:paddingLeft="13dp"/>
+        android:paddingLeft="13dp" />
     <EditText
         android:id="@+id/edt_email"
         android:layout_width="match_parent"
@@ -52,7 +53,7 @@
         />
 
     <Button
-        android:id="@+id/btnSignup"
+        android:id="@+id/btnSignup2"
         android:layout_width="158dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/edt_password"
