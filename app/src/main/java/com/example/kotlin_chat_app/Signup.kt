@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class Signup : AppCompatActivity() {
 
@@ -15,6 +17,7 @@ class Signup : AppCompatActivity() {
     private  lateinit var edtPassword : EditText
     private  lateinit var btnSignUp: Button
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDbRef : DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +32,19 @@ class Signup : AppCompatActivity() {
 
 
         btnSignUp.setOnClickListener {
+            val name = edtName.text.toString()
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
-            signUp(email,password)
+            signUp(name,email,password)
     }
     }
-   private fun signUp( email:String, password: String ) {
+   private fun signUp(name : String,  email:String, password: String ) {
        mAuth.createUserWithEmailAndPassword(email, password)
            .addOnCompleteListener(this) { task ->
                if (task.isSuccessful) {
                     // code for jumping to home
+                        addUserToDataBase(name,email,mAuth.currentUser?.uid!!)
                    val intent = Intent(this@Signup, MainActivity::class.java)
                    startActivity(intent)
 
@@ -49,7 +54,15 @@ class Signup : AppCompatActivity() {
                        Toast.LENGTH_SHORT).show()
 
                }
+
+
+
            }
+
        //logic for signup
    }
+    private fun addUserToDataBase (name : String, email : String, uid : String ) {
+mDbRef = FirebaseDatabase.getInstance().getReference()
+        mDbRef.child("user").child(uid).setValue(User(name,email,uid))
+    }
 }
