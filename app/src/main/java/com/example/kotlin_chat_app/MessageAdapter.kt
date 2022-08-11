@@ -1,31 +1,55 @@
 package com.example.kotlin_chat_app
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 
 class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+    val ITEM_RECEIVE = 1 ;
+    val ITEM_SENT = 2
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == 1) {
+            val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
+            return receiveViewHolder(view)
+        }else {
+            val view: View = LayoutInflater.from(context).inflate(R.layout.send, parent, false)
+            return sentViewHolder(view)
+
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder.javaClass == sendViewHolder::class.java) {
+        val currentMessage = messageList[position]
+        if (holder.javaClass == sentViewHolder::class.java) {
 
-            val currentMessage = messageList[position]
+
           val viewHolder = holder as sentViewHolder
-            holder.sentMessage.text =
+            holder.sentMessage.text =  currentMessage.message
         }else {
             val viewHolder = holder as receiveViewHolder
+            holder.recieveMessage.text = currentMessage.message
 
 
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+       val currentMessage = messageList[position]
+        if (FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.senderId)) {
+           return ITEM_SENT
+        } else {
+             return ITEM_RECEIVE
+        }
+    }
+
     override fun getItemCount(): Int {
+        return messageList.size
 
     }
     class sentViewHolder (itemView:  View) : RecyclerView.ViewHolder(itemView) {
