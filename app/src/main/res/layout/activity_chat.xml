@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chartRecyclerView"
         android:layout_above="@+id/linearLayout"
-        android:layout_alignParentTop = "true"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -23,28 +23,26 @@
         android:orientation="horizontal"
         android:weightSum="100"
         tools:ignore="MissingConstraints">
+        <EditText
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/messageBox"
+            android:layout_weight="85"
+            android:hint="Type a message"
+            android:background="@drawable/message_box_background"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/sendButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="20"
+            android:src="@drawable/send"
+            tools:ignore="MissingConstraints" />
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/messageBox"
-        android:layout_width="358dp"
-        android:layout_height="45dp"
-        android:layout_weight="85"
-        android:hint="Type a message"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="682dp"
-        tools:ignore="MissingConstraints"
-        android:background="@drawable/message_box_background"
-        />
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/send"
-        tools:layout_editor_absoluteX="358dp"
-        tools:layout_editor_absoluteY="677dp"
-        android:layout_weight="20"
-        tools:ignore="MissingConstraints" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
